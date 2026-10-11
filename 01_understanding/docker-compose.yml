@@ -1,0 +1,24 @@
+services:
+  restaurant-service:
+    build: ./restaurant-service
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3001/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "3002:3002"
+    environment:
+      PORT: 3002
+      RESTAURANT_SERVICE_URL: http://restaurant-service:3001
+      RESTAURANT_TIMEOUT_MS: 3000
+    depends_on:
+      restaurant-service:
+        condition: service_healthy

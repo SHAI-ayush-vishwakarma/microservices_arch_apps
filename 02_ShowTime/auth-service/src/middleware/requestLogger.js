@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 
-const SERVICE_NAME = "auth-service"; // ← "order-service" in the other one
+const SERVICE_NAME = "auth-service"; 
 
 export function requestLogger(req, res, next) {
   // 1. reuse the ID if another service sent one, otherwise create a new one
